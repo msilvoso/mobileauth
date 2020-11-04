@@ -1,0 +1,2 @@
+# extra
+www-data ALL = NOPASSWD: /var/www/mobileauth/bin/

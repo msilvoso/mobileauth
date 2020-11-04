@@ -1,0 +1,67 @@
+<?= $this->doctype() ?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+	<head>
+		<?= $this->headMeta(); ?>
+		<?= $this->headTitle(); ?>
+		<?= $this->headStyle(); ?>
+		<?= $this->headLink(); ?>
+		<?= $this->headScript(); ?>
+	</head>
+	
+	<body>
+		<div id="header">
+			<h1><?= $this->placeholder('Zend_View_Helper_HeadTitle')?></h1>
+ 			<?php /*<!--<div id="menu">
+				<ul id="nav">
+					 <?php $this->render('_topnav.phtml') ?>
+				</ul>
+			</div>--> */?>
+		</div>
+		
+		<div id="content">
+			<div id="left">
+				<?php foreach($this->getFlashMessages() as $level=>$flashType): ?>
+					<?php foreach($flashType as $message): ?>
+						<div class="<?=$level?>">
+							<?=$message?>
+						</div>
+					<?php endforeach; ?>
+				<?php endforeach; ?>
+
+				<?= $this->layout()->content ?>
+			</div>
+	
+			<div id="right">
+				<div class="box">
+					<?php if (empty($this->login)): ?>
+						<form action="<?=$this->url(array('controller' => 'out','action' => 'login'))?>" method="post" name="loginForm">
+							<div>Login:</div>
+							<div><?php echo $this->formText('login','',array('autocomplete'=>'off'))?></div>
+							<div>Password:</div>
+							<div><?php echo $this->formPassword('passwd','',array('autocomplete'=>'off'))?></div>
+							<br/>
+							<div><?php echo $this->formSubmit('submit','login',array('autocomplete'=>'off'))?></div>
+						</form>
+					<?php else: ?>
+						<form action="<?=$this->url(array('controller' => 'index','action' => 'changepassword'))?>" method="post" name="chngPsswdForm">
+							<div>Welcome <?=$this->escape($this->login)?></div>
+							<br/>
+							<div>Change your password:</div>
+							<div><?php echo $this->formPassword('passwd1','',array('autocomplete'=>'off'))?></div>
+							<div>Repeat your password:</div>
+							<div><?php echo $this->formPassword('passwd2','',array('autocomplete'=>'off'))?></div>
+							<br/>
+							<div><?php echo $this->formSubmit('submit','Change Password')?></div>
+							<br/>
+							<a href="<?=$this->url(array('controller' => 'index','action' => 'logout'))?>">Logout</a>
+						</form>
+					<?php endif; ?>
+				</div>
+			
+    				<div class="box">
+					<div style="font-size: 0.8em;">Written by <a href="http://www.cases.lu">CASES</a></div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

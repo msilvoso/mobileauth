@@ -1,0 +1,70 @@
+<h1>List of unauthorized logins in the last <?=$this->days?> days</h1>
+<?php if (is_array($this->filteredLogins) && count($this->filteredLogins)>0) : ?>
+<table>
+	<thead >
+		<tr>
+			<th>User</th>
+			<th>Mobile id</th>
+			<th>Mobile type</th>
+			<th>Last login</th>
+			<th>Add</th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php foreach($this->filteredLogins as $login) :?>
+		<tr>
+			<td><?=$this->escape($login['name'])?></td>
+			<td><?=$this->escape($login['id'])?></td>
+			<td><?=$this->escape($login['type'])?></td>
+			<td><?=$this->escape($login['login'])?></td>
+			<td><a href="<?=$this->url(array('controller' => 'index','action' => 'add','id' => $login['count']), null, true );?>"><img src="images/action_add.png" border="0" alt="add"/></a></td>
+		</tr>
+		<?php endforeach; ?>
+	</tbody>
+</table>
+<?php else: ?>
+<h2>There have been no unauthorized logins</h2>
+<?php endif; ?>
+<h1>List of all logins in the last <?=$this->days?> days</h1>
+<?php if (is_array($this->logins) && count($this->logins)>0) : ?>
+<table>
+	<thead >
+		<tr>
+			<th>User</th>
+			<th>Remove user</th>
+			<th>Mobile id</th>
+			<th>Remove id</th>
+			<th>Mobile type</th>
+			<th>Remove type</th>
+			<th>Last login</th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php foreach($this->logins as $login) :?>
+		<tr>
+			<td><?=$this->escape($login['name'])?></td>
+			<td>
+				<?php if ($login['nameExists']) :?>
+				<a href="<?=$this->url(array('controller' => 'index','action' => 'del','name' => $login['name']), null, true );?>"><img src="images/action_del.png" border="0" alt="del"/></a>
+				<?php endif; ?>
+			</td>
+			<td><?=$this->escape($login['id'])?></td>
+			<td>
+				<?php if ($login['idExists']) :?>
+				<a href="<?=$this->url(array('controller' => 'index','action' => 'del','id' => $login['id']), null, true );?>"><img src="images/action_del.png" border="0" alt="del"/></a>
+				<?php endif; ?>
+			</td>
+			<td><?=$this->escape($login['type'])?></td>
+			<td>
+				<?php if ($login['typeExists']) :?>
+				<a href="<?=$this->url(array('controller' => 'index','action' => 'del','type' => $login['type']), null, true );?>"><img src="images/action_del.png" border="0" alt="del"/></a>
+				<?php endif; ?>
+			</td>
+			<td><?=$this->escape($login['login'])?></td>
+		</tr>
+		<?php endforeach; ?>
+	</tbody>
+</table>
+<?php else: ?>
+<h2>There have been no logins</h2>
+<?php endif; ?>
